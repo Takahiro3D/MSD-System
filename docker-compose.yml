@@ -1,0 +1,13 @@
+services:
+  streamlit:
+    image: streamlit_server
+    container_name: streamlit_msd_system
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./resource:/resource
+      - ./src:/src
+    # command: streamlit run /src/vib.py
+    command: streamlit run /src/damping.py
+    # stdin_open: true  # `-it` の `-i` に相当
+    # tty: true         # `-it` の `-t` に相当
