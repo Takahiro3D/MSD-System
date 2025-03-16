@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pathlib
-import sympy as sp
 import logging
 
 import msd_system
@@ -12,12 +11,12 @@ logging.basicConfig(level=logging.INFO)
 
 # ページ設定
 st.set_page_config(
-    page_title="ダッシュボード",
+    page_title="減衰運動",
     layout="wide",
 )
 
 # ヘッダ
-st.markdown('# 質量 ばね ダンパーモデル 減衰運動')
+st.markdown('# 1自由度 質量 ばね ダンパーモデル 減衰運動')
 
 # モデル画像
 image_path = pathlib.Path("../resource/MSD-System.png").resolve()
@@ -40,11 +39,11 @@ with col2:
 # https://tajimarobotics.com/damped-mass-spring-system-example/
 
 st.write("運動方程式")
-st.latex(r"mx''+ cx' + kx = f cos{\Omega t}")
+st.latex(r"m\ddot{x}+ c\dot{x} + kx = f cos{\Omega t}")
 
 m = st.number_input("m: ばねの質量[kg]", value=5.0)
-c = st.number_input("c: 減衰係数[N/(m/s)]", value=10.0)
 k = st.number_input("k: ばね係数[N/m]", value=100.0)
+c = st.number_input("c: 減衰係数[N/(m/s)]", value=10.0)
 
 x0 = st.number_input("x0: 初期変位量[m]", value=0.1)
 # x'0 初期速度[m/s] は0.0固定

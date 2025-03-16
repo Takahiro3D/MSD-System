@@ -7,7 +7,6 @@ services:
     volumes:
       - ./resource:/resource
       - ./src:/src
-    # command: streamlit run /src/vib.py
-    command: streamlit run /src/damping.py
+    command: streamlit run /src/main.py
     # stdin_open: true  # `-it` の `-i` に相当
     # tty: true         # `-it` の `-t` に相当

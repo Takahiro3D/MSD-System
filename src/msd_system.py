@@ -175,3 +175,30 @@ class _CriticallyDampedSystem(_Interface):
     def velocity(self, t):
         return self._A * np.exp(-self._gamma * t) \
             - self._gamma * (self._B + self._A * t) * np.exp(-self._gamma * t)
+
+
+def calc_displacement_with_vibration(m, k, c, F, omega, t):
+  """
+  Calculate steady state displacement, amplitude, and phase with a vibration input
+  """
+  # 係数を計算
+  omega_0 = np.sqrt(k/m) # 固有振動数
+  gamma = gamma = c / (2 * m)
+  f = F/m
+  logging.info(f"coefficients: {omega_0=}, {gamma=}")
+
+  # 定常状態の解
+  A = (f * (omega_0**2 - omega**2)) / ((omega_0**2 - omega**2)**2 + 4 * omega**2 * gamma**2)
+  B = (2 * f * omega * gamma) / ((omega_0**2 - omega**2)**2 + 4 * omega**2 * gamma**2)
+  logging.info(f"constat: {A=}, {B=}")
+
+  # x(t) の計算
+  x_t = A * np.cos(omega * t) + B * np.sin(omega * t)
+
+  # 振幅の計算
+  amplitude = np.sqrt(A**2 + B**2)
+
+  # 位相の計算 (ラジアン単位)
+  phase = np.arctan2(B, A)
+
+  return x_t, amplitude, phase
