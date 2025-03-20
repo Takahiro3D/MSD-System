@@ -29,7 +29,7 @@ with col2:
     st.image(image_path, use_container_width=True)  # 画像を中央カラムに配置
 
 st.write("運動方程式")
-st.latex(r"m\ddot{x}+ c\dot{x} + kx = f cos{\Omega t}")
+st.latex(r"m\ddot{x}+ c\dot{x} + kx = F cos{\omega t}")
 
 m = st.number_input("m: ばねの質量[kg]", value=5.0)
 k = st.number_input("k: ばね係数[N/m]", value=100.0)
