@@ -7,9 +7,7 @@ RUN apt-get update && apt-get install -y \
     git && \
     rm -rf /var/lib/apt/lists/* &&\
     pip install -U pip && \
-    pip install streamlit && \
-    pip install plotly && \
-    pip install sympy
+    pip install streamlit plotly sympy control
 
 WORKDIR /src/
 

@@ -16,7 +16,8 @@ st.set_page_config(
 )
 
 # ヘッダ
-st.markdown('# 1自由度 質量 ばね ダンパーモデル 減衰運動')
+st.markdown('# 1自由度 質量 ばね ダンパーモデル')
+st.markdown('## 減衰運動')
 
 # モデル画像
 image_path = pathlib.Path("../resource/MSD-System.png").resolve()
@@ -38,8 +39,8 @@ with col2:
 
 # https://tajimarobotics.com/damped-mass-spring-system-example/
 
-st.write("運動方程式")
-st.latex(r"m\ddot{x}+ c\dot{x} + kx = f cos{\Omega t}")
+st.write("## 運動方程式")
+st.latex(r"m\ddot{x}+ c\dot{x} + kx = 0")
 
 m = st.number_input("m: ばねの質量[kg]", value=5.0)
 k = st.number_input("k: ばね係数[N/m]", value=100.0)
@@ -50,6 +51,8 @@ x0 = st.number_input("x0: 初期変位量[m]", value=0.1)
 
 system = msd_system.System(m, c, k, x0)
 system.solve()
+
+st.write("## システム")
 
 if system.name() == "Overdamped System":
     st.write("過減衰システム")

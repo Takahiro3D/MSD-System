@@ -44,5 +44,6 @@ with col2:
 st.markdown("""
 - damping: 外力なしの減衰運動
 - vibration: 振動入力時の定常状態の運動
+- transfer functiohn: 伝達関数とボード線図
 """)
 
