@@ -5,7 +5,8 @@ import sympy as sp
 import logging
 
 # ロギングの設定
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 class System():
@@ -22,13 +23,13 @@ class System():
         # _lambda = sp.symbols('lambda')
         # expr = _lambda**2 - (self.c/self.m)*_lambda + (self.k/self.m)
         # solutions = sp.solve(expr, _lambda)
-        # logging.debug(f"num of solutions: {len(solutions)}")
+        # logger.debug(f"num of solutions: {len(solutions)}")
         # real_part, imag_part = solutions[0].as_real_imag()
-        # logging.debug(f"solution: {real_part=}, {imag_part=}")
+        # logger.debug(f"solution: {real_part=}, {imag_part=}")
 
         gamma = self._c / (2 * self._m)
         omega = sp.sqrt(self._k/self._m)
-        logging.info(f"solution: {gamma =}, {omega=}")
+        logger.info(f"solution: {gamma =}, {omega=}")
 
         discriminant = self._c**2 - 4 * self._m * self._k
 
@@ -45,7 +46,7 @@ class System():
             self.solusion = _UnderdampedSystem(gamma, omega)
             self.solusion.solve(self._x0)
 
-        logging.info(f"solved system: {self.name()}")
+        logger.info(f"solved system: {self.name()}")
 
     def name(self):
         if self.solusion == None:
@@ -99,7 +100,7 @@ class _OverdampedSystem(_Interface):
         discriminant = np.sqrt(gamma**2 - omega**2)
         self._l_1 = np.float64(-gamma+discriminant)
         self._l_2 = np.float64(-gamma-discriminant)
-        logging.info(f"solution: {self._l_1 =}, {self._l_2=}")
+        logger.info(f"solution: {self._l_1 =}, {self._l_2=}")
 
     def name(self):
         return "Overdamped System"
@@ -110,7 +111,7 @@ class _OverdampedSystem(_Interface):
         """
         self._C1 = (-x0 * self._l_2) / (self._l_1 - self._l_2)
         self._C2 = (-x0 * self._l_1) / (self._l_2 - self._l_1)
-        logging.info(f"constants: {self._C1=}, {self._C2=}")
+        logger.info(f"constants: {self._C1=}, {self._C2=}")
 
     def displacement(self, t):
         return self._C1 * np.exp(self._l_1*t) + self._C2 * np.exp(self._l_2*t)
@@ -137,7 +138,7 @@ class _UnderdampedSystem(_Interface):
         """
         self._A = x0
         self._B = (self._gamma * x0) / self._omega
-        logging.info(f"constants: {self._A =}, {self._B=}")
+        logger.info(f"constants: {self._A =}, {self._B=}")
 
     def displacement(self, t):
         return np.exp(-self._gamma * t) * (self._A * np.cos(self._omega * t) + self._B * np.sin(self._omega * t))
@@ -167,7 +168,7 @@ class _CriticallyDampedSystem(_Interface):
         """
         self._A = self._gamma * x0
         self._B = x0
-        logging.info(f"constants: {self._A=}, {self._B=}")
+        logger.info(f"constants: {self._A=}, {self._B=}")
 
     def displacement(self, t):
         return (self._A * t + self._B) * np.exp(-self._gamma * t)
@@ -185,12 +186,12 @@ def calc_displacement_with_vibration(m, k, c, F, omega, t):
   omega_0 = np.sqrt(k/m) # 固有振動数
   gamma = gamma = c / (2 * m)
   f = F/m
-  logging.info(f"coefficients: {omega_0=}, {gamma=}")
+  logger.info(f"coefficients: {omega_0=}, {gamma=}")
 
   # 定常状態の解
   A = (f * (omega_0**2 - omega**2)) / ((omega_0**2 - omega**2)**2 + 4 * omega**2 * gamma**2)
   B = (2 * f * omega * gamma) / ((omega_0**2 - omega**2)**2 + 4 * omega**2 * gamma**2)
-  logging.info(f"constat: {A=}, {B=}")
+  logger.info(f"constat: {A=}, {B=}")
 
   # x(t) の計算
   x_t = A * np.cos(omega * t) + B * np.sin(omega * t)

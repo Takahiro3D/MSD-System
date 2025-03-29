@@ -9,7 +9,8 @@ import logging
 import control as ctrl
 
 # ロギングの設定
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # ページ設定
 st.set_page_config(
@@ -23,7 +24,7 @@ st.markdown('## 伝達関数')
 
 # モデル画像
 image_path = pathlib.Path("../resource/MSD-System.png").resolve()
-# logging.debug(f"画像の絶対パス: {image_path}")
+# logger.debug(f"画像の絶対パス: {image_path}")
 # st.image(image_path, caption="モデル画像", use_container_width =False, )
 
 # Show image in center
@@ -64,7 +65,7 @@ mag, phase, omega = ctrl.bode_plot(G, dB=True, omega_limits=(0.1, 100), omega_nu
 # df['Magnitude_dB'] = 20 * np.log10(mag)
 # df['Phase_deg'] = np.degrees(phase)
 # 
-# logging.debug(f"{df=}")
+# logger.debug(f"{df=}")
 # 
 # グラフ描画
 # st.line_chart(df, x='Frequency_Hz', y='Magnitude_dB')
@@ -73,7 +74,7 @@ mag, phase, omega = ctrl.bode_plot(G, dB=True, omega_limits=(0.1, 100), omega_nu
 # pyplotで描画
 # 現状日本語フォント非対応
 # for font in fm.findSystemFonts():
-#     logging.info(fm.FontProperties(fname=font).get_name())
+#     logger.info(fm.FontProperties(fname=font).get_name())
 # plt.rcParams['font.family'] = 'DejaVu Serif'
 
 fig, axs = plt.subplots(2, 1, figsize=(10, 8))

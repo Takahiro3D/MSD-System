@@ -7,7 +7,8 @@ import logging
 import msd_system
 
 # ロギングの設定
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # ページ設定
 st.set_page_config(
@@ -21,7 +22,7 @@ st.markdown('## 減衰運動')
 
 # モデル画像
 image_path = pathlib.Path("../resource/MSD-System.png").resolve()
-# logging.debug(f"画像の絶対パス: {image_path}")
+# logger.debug(f"画像の絶対パス: {image_path}")
 # st.image(image_path, caption="モデル画像", use_container_width =False, )
 
 # Show image in center
@@ -82,7 +83,7 @@ df['Time_sec'] = time
 df['Displacement_m'] = system.displacement(time)
 df['Velocity_m/s'] = system.velocity(time)
 
-logging.debug(f"{df=}")
+logger.debug(f"{df=}")
 
 # グラフ描画
 # "[]" cannot be used

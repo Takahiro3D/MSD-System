@@ -7,7 +7,8 @@ import logging
 import msd_system
 
 # ロギングの設定
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # ページ設定
 st.set_page_config(
@@ -21,7 +22,7 @@ st.markdown('## 強制振動')
 
 # モデル画像
 image_path = pathlib.Path("../resource/MSD-System.png").resolve()
-# logging.debug(f"画像の絶対パス: {image_path}")
+# logger.debug(f"画像の絶対パス: {image_path}")
 # st.image(image_path, caption="モデル画像", use_container_width =False, )
 
 # Show image in center
